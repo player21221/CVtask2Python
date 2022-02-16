@@ -1,6 +1,6 @@
 
 import numpy as np
-import opencv as cv
+#import opencv as cv
 
 def construct_color_filter(pts):
     p0 = np.mean(pts, axis=0)
