@@ -1,6 +1,13 @@
 
 import numpy as np
-#import opencv as cv
+import cv2
+
+def define_point_cloud(image, imageMask, MaskColor):
+    pointCloud=()
+    for i in [0,image.cols] and j in [0,image.rows]:
+        if imageMask[i,j] == MaskColor:
+            pointCloud.append(image[i,j])
+    return pointCloud
 
 def construct_color_filter(pts):
     p0 = np.mean(pts, axis=0)
