@@ -13,7 +13,7 @@ def define_point_cloud(image, imsk, mskclr, deccoef=10):
         for j in range(0, image.shape[1]):
             if all(imsk[i, j] == mskclr):
                 if ( b == deccoef ):
-                    pass
+                    #pass
                     pc.extend([image[i, j].tolist()])
                     # np.append(pc, image[i,j], axis=0)
                     b=1
@@ -68,7 +68,9 @@ res = apply_color_filter(fu, image)
 # cv2.erode(image, np.ones([3,3]), imagedst, np.array([-1,-1]), 1)
 
 print(fu)
+cv2.imwrite("result.png", res)
 cv2.imshow("result", res)
 cv2.waitKey()
+#pass
 # a = construct_color_filter(pts)
 # print(a)
