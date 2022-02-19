@@ -2,15 +2,25 @@ import numpy as np
 import cv2
 
 
-def define_point_cloud(image, imsk, mskclr):
+def define_point_cloud(image, imsk, mskclr, deccoef=100):
     pc = []
+    #pc = np.empty([1, 3], dtype=np.uint8)
     # for i in [0, image.cols] and j in [0, image.rows]:
     #     if imsk[i, j] == mskclr:
     #         pc.append(image[i, j])
-    for i,j in image:
-        if imsk[i,j] == mskclr:
-            pc.extend(image[i,j])
-    return pc
+    b=0
+    for i in range(0, image.shape[0]):
+        for j in range(0, image.shape[1]):
+            if all(imsk[i, j] == mskclr):
+                if ( b == deccoef ):
+                    pass
+                    pc.extend([image[i, j].tolist()])
+                    # np.append(pc, image[i,j], axis=0)
+                    b=0
+                else:
+                    b+=1
+
+    return np.array(pc)
 
 
 def construct_color_filter(pts):
@@ -48,17 +58,17 @@ image = cv2.imread("msg271576874-60545.jpg")
 imsk = cv2.imread("msg271576874-60545_Mask.png")
 mskclr = np.array([0, 255, 0])
 
-# pcld = define_point_cloud(image, imsk, mskclr)
-# fu = construct_color_filter(pcld)
-# res = apply_color_filter(fu, image)
+pcld = define_point_cloud(image, imsk, mskclr)
+fu = construct_color_filter(pcld)
+res = apply_color_filter(fu, image)
 
-imagedst=0
-imagedst=image
+# imagedst=0
+# imagedst=image
 
-cv2.erode(image, np.ones([3,3]), imagedst, np.array([-1,-1]), 1)
+# cv2.erode(image, np.ones([3,3]), imagedst, np.array([-1,-1]), 1)
 
-
-cv2.imshow("result", image)
+print(fu)
+cv2.imshow("result", res)
 cv2.waitKey()
 # a = construct_color_filter(pts)
 # print(a)
