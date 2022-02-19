@@ -2,13 +2,13 @@ import numpy as np
 import cv2
 
 
-def define_point_cloud(image, imsk, mskclr, deccoef=100):
+def define_point_cloud(image, imsk, mskclr, deccoef=10):
     pc = []
     #pc = np.empty([1, 3], dtype=np.uint8)
     # for i in [0, image.cols] and j in [0, image.rows]:
     #     if imsk[i, j] == mskclr:
     #         pc.append(image[i, j])
-    b=0
+    b=1
     for i in range(0, image.shape[0]):
         for j in range(0, image.shape[1]):
             if all(imsk[i, j] == mskclr):
@@ -16,7 +16,7 @@ def define_point_cloud(image, imsk, mskclr, deccoef=100):
                     pass
                     pc.extend([image[i, j].tolist()])
                     # np.append(pc, image[i,j], axis=0)
-                    b=0
+                    b=1
                 else:
                     b+=1
 
